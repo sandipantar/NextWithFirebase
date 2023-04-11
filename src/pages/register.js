@@ -1,27 +1,19 @@
 import { app } from '../../firebaseConf';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function Register(){
 
     const auth = getAuth();
     const router = useRouter();
-    const [email, setEmail] = ('');
-    const [password, setPassword] = ('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const signUp = () => {
-        // createUserWithEmailAndPassword(auth, email, password)
-        // .then(() => {
-        //     router.push('/')
-        // })
-        async function createUserWithEmailAndPassword(auth, email, password) {
-            const authInternal = _castAuth(auth);
-            // const response = await signUp(authInternal, {
-            //     returnSecureToken: true,
-            //     email,
-            //     password
-            // });
-            window.localStorage.setItem('emailForSignIn', email);
-    }
+        createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            router.push('/')
+        })
 }
 
     return(
