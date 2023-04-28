@@ -1,10 +1,21 @@
 import Image from 'next/image';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { Inter } from 'next/font/google';
 import { app } from '../../firebaseConf';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+  let router = useRouter()
+  useEffect(() => {
+    let token = sessionStorage.getItem('Token')
+
+    // if(!token){
+    //   router.push('/register')
+    // }
+  }, [])
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
