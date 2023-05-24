@@ -6,5 +6,7 @@ export const Layout = (props) => {
         <Link href="/register"></Link>
         <Link href="/catagory"></Link>
         <Link href="/dashBoard"></Link>
+        <Link href="/product"></Link>
+        <Link href="/productForm"></Link>
     </div>
 }

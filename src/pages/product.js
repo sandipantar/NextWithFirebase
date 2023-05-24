@@ -4,24 +4,24 @@ import { collection, addDoc, getDocs, query, orderBy, onSnapshot, QuerySnapshot,
 import { useRouter } from 'next/router';
 import { useState, useEffect, useRef, useContext } from 'react';
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/20/solid';
-import { SubCatagoryContext } from './components/subCatagory/SubCatagoryContext';
-import SubCatagoryItem from './components/subCatagory/subCatagoryItem';
-import SubCatagoryForm from './components/subCatagory/subCatagoryForm';
+import { ProductContext } from './components/product/productContext';
+import ProductItem from './components/product/produtsItem';
+import ProductForm from './components/product/productForm';
 import moment from 'moment';
 
-export default function Catagory(){
+export default function Product(){
     const inputAreaRef = useRef();
     const router = useRouter();
-    const [subfetch, setSubFetch] = useState([]);
+    const [profetch, setProFetch] = useState([]);
     // const {showAlert} = useContext(CatagoryContext);
     
-    const dataBaseRef = collection(dataBase, 'subcat');
+    const colRef = collection(dataBase, 'products')
     useEffect(() => {
-      const colRef = collection(dataBase, 'subcat')
+     
       const qry = query(colRef, orderBy("createdAt", "desc"));
       const catData = onSnapshot(qry, (QuerySnapshot) => {
-        setSubFetch(QuerySnapshot.docs.map(doc => ({...doc.data(), id: doc.id, createdAt: doc.data().
-          createdAt.toDate().getTime() })))
+        setProFetch(QuerySnapshot.docs.map(doc => ({...doc.data(), id: doc.id, createdAt: doc.data().
+          pFlag})))
       });
       return catData
       let token = sessionStorage.getItem('Token')
@@ -52,15 +52,15 @@ export default function Catagory(){
 //     document.getElementById(alertType).className = 'toast';
 // }, 5000);
     return(
-      <SubCatagoryContext.Provider value={{subfetch, setSubFetch}}>
+      <ProductContext.Provider value={{profetch, setProFetch}}>
         <div>
           <Head>
-            <title>Sub Catagory</title>
+            <title>Products</title>
           </Head>
             <main className="flex min-h-screen flex-col items-center justify-between p-24">
               <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
               <span className="font-mono font-bold shadow-lg fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200  backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-                Sub Catagory &nbsp;
+                Products &nbsp;
                 <code className="font-mono font-bold"> Center</code>
               </span>
               </div>
@@ -68,15 +68,15 @@ export default function Catagory(){
               {/* <pre>{JSON.stringify(subfetch,null,'\t')}</pre> */}
               <div className="px-4 sm:px-0">
               <div className="fixed left-0 top-0 flex w-full shadow justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-                  <SubCatagoryForm/>
+                  <ProductForm/>
               </div>
               </div>
-              {Array.from(subfetch).map(scatDet => <SubCatagoryItem key={scatDet.id}
-              id={scatDet.id}
-              catagoryHead={scatDet.catagoryHead}
-              subcatagory={scatDet.subcatagory}
-              subcatagoryFlag={scatDet.subcatagoryFlag}
-              createdAt={scatDet.createdAt}
+              {Array.from(profetch).map(proDet => <ProductItem key={proDet.id}
+              id={proDet.id}
+              pTitle={proDet.pTitle}
+              // subcatagory={proDet.subcatagory}
+              subcatagoryFlag={proDet.pFlag}
+              // createdAt={proDet.createdAt}
               />)}
               {/* <div
                       open={open}
@@ -95,6 +95,6 @@ export default function Catagory(){
             </div>
             </main>
         </div>
-       </SubCatagoryContext.Provider>
+       </ProductContext.Provider>
     )
 }

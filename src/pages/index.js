@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Inter } from 'next/font/google';
 import { app } from '../../firebaseConf';
@@ -16,6 +16,7 @@ export default function Home() {
     //   router.push('/register')
     // }
   }, [])
+
   return (
     
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
